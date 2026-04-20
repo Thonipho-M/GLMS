@@ -1,0 +1,34 @@
+﻿@model ServiceRequest
+
+<form asp-action="Create" method="post">
+
+    <label>Contract</label>
+    <select asp-for="ContractId">
+        @foreach (var contract in ViewBag.Contracts)
+        {
+            <option value="@contract.Id">@contract.Id</option>
+        }
+    </select>
+
+    <label>Description</label>
+    <input asp-for="Description" />
+
+    <label>USD Amount</label>
+    <input type="number" id="usdInput" name="usdAmount" />
+
+    <label>ZAR Amount</label>
+    <input type="text" id="zarOutput" readonly />
+
+    <button type="submit">Save</button>
+
+</form>
+
+<script>
+    const rate = @ViewBag.Rate;
+
+    document.getElementById("usdInput").addEventListener("input", function () {
+        let usd = this.value;
+        let zar = usd * rate;
+        document.getElementById("zarOutput").value = zar.toFixed(2);
+    });
+</script>
