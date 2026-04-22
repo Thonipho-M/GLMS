@@ -1,0 +1,22 @@
+﻿@model List<ServiceRequest>
+
+<h2>Service Requests</h2>
+
+<table border="1">
+    <tr>
+        <th>Contract ID</th>
+        <th>Description</th>
+        <th>Cost (ZAR)</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach (var r in Model)
+    {
+        <tr>
+            <td>@r.ContractId</td>
+            <td>@r.Description</td>
+            <td>R @r.CostZAR</td>
+            <td>@r.Status</td>
+        </tr>
+    }
+</table>

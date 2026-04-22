@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 public class ServiceRequestsController : Controller
 {
@@ -44,5 +45,14 @@ public class ServiceRequestsController : Controller
         _context.SaveChanges();
 
         return RedirectToAction("Index");
+    }
+
+    public IActionResult Index()
+    {
+        var requests = _context.ServiceRequests
+            .Include(r => r.Contract)
+            .ToList();
+
+        return View(requests);
     }
 }

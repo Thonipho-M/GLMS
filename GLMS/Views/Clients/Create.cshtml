@@ -1,0 +1,18 @@
+﻿@model Client
+
+<h2>Create Client</h2>
+
+<form asp-action="Create" method="post">
+
+    <label>Name</label>
+    <input asp-for="Name" />
+
+    <label>Contact Details</label>
+    <input asp-for="ContactDetails" />
+
+    <label>Region</label>
+    <input asp-for="Region" />
+
+    <button type="submit">Save</button>
+
+</form>

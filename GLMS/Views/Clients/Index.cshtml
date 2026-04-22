@@ -1,0 +1,22 @@
+﻿@model List<Client>
+
+<h2>Clients</h2>
+
+<a asp-action="Create">Add New Client</a>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Region</th>
+    </tr>
+
+@foreach (var c in Model)
+{
+    <tr>
+        <td>@c.Name</td>
+        <td>@c.ContactDetails</td>
+        <td>@c.Region</td>
+    </tr>
+}
+</table>

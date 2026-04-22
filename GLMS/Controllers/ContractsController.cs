@@ -15,7 +15,15 @@ public class ContractsController : Controller
     // GET: Create
     public IActionResult Create()
     {
-        ViewBag.Clients = _context.Clients.ToList();
+        var clients = _context.Clients.ToList();
+
+        if (!clients.Any())
+        {
+            TempData["Error"] = "Please create a client first.";
+            return RedirectToAction("Create", "Clients");
+        }
+
+        ViewBag.Clients = clients;
         return View();
     }
 
@@ -57,7 +65,7 @@ public class ContractsController : Controller
 
     public IActionResult Index(string status, DateTime? startDate, DateTime? endDate)
     {
-        var contracts = _context.Contracts.AsQueryable();
+        var contracts = _context.Contracts.Include(c => c.Client).AsQueryable();
 
         if (!string.IsNullOrEmpty(status))
             contracts = contracts.Where(c => c.Status == status);

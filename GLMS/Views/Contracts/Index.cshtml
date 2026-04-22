@@ -1,0 +1,48 @@
+﻿@model List<Contract>
+
+<h2>Contracts</h2>
+
+<form method="get">
+    <label>Status:</label>
+    <select name="status">
+        <option value="">All</option>
+        <option>Draft</option>
+        <option>Active</option>
+        <option>Expired</option>
+        <option>On Hold</option>
+    </select>
+
+    <label>Start Date:</label>
+    <input type="date" name="startDate" />
+
+    <label>End Date:</label>
+    <input type="date" name="endDate" />
+
+    <button type="submit">Filter</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>Client</th>
+        <th>Status</th>
+        <th>Dates</th>
+        <th>Service Level</th>
+        <th>PDF</th>
+    </tr>
+
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.Client?.Name</td>
+            <td>@c.Status</td>
+            <td>@c.StartDate.ToShortDateString() - @c.EndDate.ToShortDateString()</td>
+            <td>@c.ServiceLevel</td>
+            <td>
+                @if (c.FilePath != null)
+                {
+                    <a asp-action="Download" asp-route-id="@c.Id">Download</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
