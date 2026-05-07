@@ -4,10 +4,17 @@
 
     <label>Contract</label>
     <select asp-for="ContractId">
+
         @foreach (var contract in ViewBag.Contracts)
         {
-            <option value="@contract.Id">@contract.Id</option>
+            <option value="@contract.Id">
+
+                Contract #@contract.Id -
+                @contract.Client?.Name
+
+            </option>
         }
+
     </select>
 
     <label>Description</label>

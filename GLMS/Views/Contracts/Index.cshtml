@@ -2,6 +2,11 @@
 
 <h2>Contracts</h2>
 
+@if (TempData["Success"] != null)
+{
+    <p style="color:green">@TempData["Success"]</p>
+}
+
 <form method="get">
     <label>Status:</label>
     <select name="status">
@@ -42,6 +47,9 @@
                 {
                     <a asp-action="Download" asp-route-id="@c.Id">Download</a>
                 }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@c.Id">Edit</a>
             </td>
         </tr>
     }

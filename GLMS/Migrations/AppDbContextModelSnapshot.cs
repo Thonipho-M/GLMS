@@ -62,11 +62,9 @@ namespace GLMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FilePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServiceLevel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
@@ -94,6 +92,9 @@ namespace GLMS.Migrations
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("CostUSD")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("CostZAR")
                         .HasColumnType("decimal(18,2)");
 
@@ -102,7 +103,6 @@ namespace GLMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -4,11 +4,15 @@
 
 <form asp-action="Create" method="post">
 
+    <div asp-validation-summary="All" style="color:red;"></div>
+
     <label>Name</label>
     <input asp-for="Name" />
+    <span asp-validation-for="Name" style="color:red;"></span>
 
     <label>Contact Details</label>
     <input asp-for="ContactDetails" />
+    <span asp-validation-for="ContactDetails" style="color:red;"></span>
 
     <label>Region</label>
     <input asp-for="Region" />

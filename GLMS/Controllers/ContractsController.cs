@@ -50,6 +50,46 @@ public class ContractsController : Controller
         return RedirectToAction("Index");
     }
 
+    // GET: Edit
+    public IActionResult Edit(int id)
+    {
+        var contract = _context.Contracts.Find(id);
+
+        if (contract == null)
+            return NotFound();
+
+        ViewBag.Clients = _context.Clients.ToList();
+
+        return View(contract);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Contract contract)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Clients = _context.Clients.ToList();
+            return View(contract);
+        }
+
+        var existingContract = _context.Contracts.Find(contract.Id);
+
+        if (existingContract == null)
+            return NotFound();
+
+        existingContract.ClientId = contract.ClientId;
+        existingContract.StartDate = contract.StartDate;
+        existingContract.EndDate = contract.EndDate;
+        existingContract.Status = contract.Status;
+        existingContract.ServiceLevel = contract.ServiceLevel;
+
+        _context.SaveChanges();
+
+        TempData["Success"] = "Contract updated successfully";
+
+        return RedirectToAction("Index");
+    }
+
     // GET: Download PDF
     public IActionResult Download(int id)
     {

@@ -1,0 +1,44 @@
+﻿@model Contract
+
+
+<h2>Edit Contract</h2>
+
+<div asp-validation-summary="All" style="color:red;"></div>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <label>Client</label>
+    <select asp-for="ClientId">
+        @foreach (var client in ViewBag.Clients)
+        {
+            <option value="@client.Id">@client.Name</option>
+        }
+    </select>
+
+    <label>Start Date</label>
+    <input asp-for="StartDate" type="date" />
+
+    <label>End Date</label>
+    <input asp-for="EndDate" type="date" />
+
+    <label>Status</label>
+    <select asp-for="Status">
+
+        <option value="Draft">Draft</option>
+
+        <option value="Active">Active</option>
+
+        <option value="Expired">Expired</option>
+
+        <option value="On Hold">On Hold</option>
+
+    </select>
+
+    <label>Service Level</label>
+    <input asp-for="ServiceLevel" />
+
+    <button type="submit">Save Changes</button>
+
+</form>

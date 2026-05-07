@@ -3,20 +3,45 @@
 <h2>Service Requests</h2>
 
 <table border="1">
+
     <tr>
-        <th>Contract ID</th>
+        <th>Client</th>
+        <th>Contract</th>
         <th>Description</th>
-        <th>Cost (ZAR)</th>
+        <th>USD Amount</th>
+        <th>ZAR Amount</th>
         <th>Status</th>
     </tr>
 
     @foreach (var r in Model)
     {
         <tr>
-            <td>@r.ContractId</td>
-            <td>@r.Description</td>
-            <td>R @r.CostZAR</td>
-            <td>@r.Status</td>
+
+            <td>
+                @r.Contract?.Client?.Name
+            </td>
+
+            <td>
+                #@r.ContractId
+            </td>
+
+            <td>
+                @r.Description
+            </td>
+
+            <td>
+                $ @r.CostUSD
+            </td>
+
+            <td>
+                R @r.CostZAR
+            </td>
+
+            <td>
+                @r.Status
+            </td>
+
         </tr>
     }
+
 </table>

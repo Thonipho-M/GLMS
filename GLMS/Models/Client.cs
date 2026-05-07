@@ -13,5 +13,6 @@ public class Client
 
     public string Region { get; set; }
 
-    public ICollection<Contract> Contracts { get; set; }
+    // Navigation Property
+    public ICollection<Contract>? Contracts { get; set; } = new List<Contract>();
 }

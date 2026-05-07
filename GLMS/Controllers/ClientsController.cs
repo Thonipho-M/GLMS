@@ -27,7 +27,12 @@ public class ClientsController : Controller
     public IActionResult Create(Client client)
     {
         if (!ModelState.IsValid)
+        {
+            Console.WriteLine("Model is invalid");
             return View(client);
+        }
+
+        Console.WriteLine("Saving client...");
 
         _context.Clients.Add(client);
         _context.SaveChanges();

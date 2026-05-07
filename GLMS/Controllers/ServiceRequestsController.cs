@@ -20,7 +20,9 @@ public class ServiceRequestsController : Controller
     // GET: Create
     public async Task<IActionResult> Create()
     {
-        ViewBag.Contracts = _context.Contracts.ToList();
+        ViewBag.Contracts = _context.Contracts
+    .Include(c => c.Client)
+    .ToList();
         ViewBag.Rate = await _currencyService.GetUsdToZarRateAsync();
 
         return View();
@@ -35,13 +37,26 @@ public class ServiceRequestsController : Controller
         if (!_service.CanCreateServiceRequest(contract.Status))
         {
             ModelState.AddModelError("", "Cannot create request for expired/on hold contract");
+
+            ViewBag.Contracts = _context.Contracts
+                .Include(c => c.Client)
+                .ToList();
+
             return View(request);
         }
 
         var rate = await _currencyService.GetUsdToZarRateAsync();
-        request.CostZAR = _currencyService.ConvertUsdToZar(usdAmount, rate);
+
+        request.CostUSD = usdAmount;
+
+        request.CostZAR =
+            _currencyService.ConvertUsdToZar(usdAmount, rate);
+
+        // DEFAULT STATUS
+        request.Status = "Pending";
 
         _context.ServiceRequests.Add(request);
+
         _context.SaveChanges();
 
         return RedirectToAction("Index");
@@ -50,8 +65,9 @@ public class ServiceRequestsController : Controller
     public IActionResult Index()
     {
         var requests = _context.ServiceRequests
-            .Include(r => r.Contract)
-            .ToList();
+    .Include(r => r.Contract)
+    .ThenInclude(c => c.Client)
+    .ToList();
 
         return View(requests);
     }

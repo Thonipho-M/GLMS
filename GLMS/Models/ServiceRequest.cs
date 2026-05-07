@@ -7,12 +7,14 @@ public class ServiceRequest
     [Required]
     public int ContractId { get; set; }
 
-    public Contract Contract { get; set; }
+    public Contract? Contract { get; set; }
 
     [Required]
     public string Description { get; set; }
 
+    public decimal CostUSD { get; set; }
+
     public decimal CostZAR { get; set; }
 
-    public string Status { get; set; }
+    public string? Status { get; set; }
 }
