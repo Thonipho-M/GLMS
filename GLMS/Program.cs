@@ -13,6 +13,7 @@ builder.Services.AddHttpClient<CurrencyService>();
 builder.Services.AddScoped<FileService>();
 builder.Services.AddScoped<ContractService>();
 builder.Services.AddScoped<ServiceRequestService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 
