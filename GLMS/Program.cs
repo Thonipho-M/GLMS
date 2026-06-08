@@ -1,4 +1,4 @@
-using GLMS.Data.Repositories;
+
 using GLMS.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +15,9 @@ builder.Services.AddScoped<FileService>();
 builder.Services.AddScoped<ContractService>();
 builder.Services.AddScoped<ServiceRequestService>();
 builder.Services.AddScoped<ClientApiService>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddHttpClient("GLMSAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7243/"); 
+    client.BaseAddress = new Uri("https://localhost:7078/"); 
 });
 
 var app = builder.Build();
