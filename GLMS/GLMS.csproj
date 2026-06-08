@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\GLMS.Shared\GLMS.Shared\GLMS.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

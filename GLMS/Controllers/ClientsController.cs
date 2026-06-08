@@ -1,42 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using GLMS.Shared.Requests;
+using GLMS.Shared.DTOs;
 
 public class ClientsController : Controller
 {
-    private readonly AppDbContext _context;
+    private readonly ClientApiService _service;
 
-    public ClientsController(AppDbContext context)
+    public ClientsController(ClientApiService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    // VIEW ALL CLIENTS
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var clients = _context.Clients.ToList();
+        var clients = await _service.GetClients();
         return View(clients);
     }
 
-    // CREATE PAGE
+    [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
-    // CREATE POST
     [HttpPost]
-    public IActionResult Create(Client client)
+    public async Task<IActionResult> Create(CreateClientRequest request)
     {
-        if (!ModelState.IsValid)
-        {
-            Console.WriteLine("Model is invalid");
-            return View(client);
-        }
-
-        Console.WriteLine("Saving client...");
-
-        _context.Clients.Add(client);
-        _context.SaveChanges();
-
+        await _service.CreateClient(request);
         return RedirectToAction("Index");
     }
 }
