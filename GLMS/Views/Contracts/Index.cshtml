@@ -1,56 +1,23 @@
-﻿@model List<Contract>
+﻿@model List<GLMS.Models.ViewModels.ContractViewModel>
 
 <h2>Contracts</h2>
 
-@if (TempData["Success"] != null)
-{
-    <p style="color:green">@TempData["Success"]</p>
-}
-
-<form method="get">
-    <label>Status:</label>
-    <select name="status">
-        <option value="">All</option>
-        <option>Draft</option>
-        <option>Active</option>
-        <option>Expired</option>
-        <option>On Hold</option>
-    </select>
-
-    <label>Start Date:</label>
-    <input type="date" name="startDate" />
-
-    <label>End Date:</label>
-    <input type="date" name="endDate" />
-
-    <button type="submit">Filter</button>
-</form>
-
-<table border="1">
-    <tr>
-        <th>Client</th>
-        <th>Status</th>
-        <th>Dates</th>
-        <th>Service Level</th>
-        <th>PDF</th>
-    </tr>
-
-    @foreach (var c in Model)
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
     {
         <tr>
-            <td>@c.Client?.Name</td>
-            <td>@c.Status</td>
-            <td>@c.StartDate.ToShortDateString() - @c.EndDate.ToShortDateString()</td>
-            <td>@c.ServiceLevel</td>
+            <td>@item.ClientName</td>
             <td>
-                @if (c.FilePath != null)
-                {
-                    <a asp-action="Download" asp-route-id="@c.Id">Download</a>
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@c.Id">Edit</a>
+                <span class="badge bg-info">@item.Status</span>
             </td>
         </tr>
     }
+    </tbody>
 </table>

@@ -1,15 +1,68 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<h2>Welcome to GLMS</h2>
+<div class="container mt-4">
 
-<p>
-    Use the navigation above to:
-</p>
+    <!-- HERO SECTION -->
+    <div class="p-5 mb-4 bg-dark text-white rounded-3 shadow">
+        <div class="container-fluid py-3">
+            <h1 class="display-5 fw-bold">GLMS System</h1>
+            <p class="col-md-8 fs-5">
+                Global Logistics Management System - API Driven Architecture
+            </p>
+            <p>
+                <span class="badge bg-success">API Connected</span>
+                <span class="badge bg-info">MVC Frontend</span>
+                <span class="badge bg-warning text-dark">Live Data Sync</span>
+            </p>
+        </div>
+    </div>
 
-<ul>
-    <li>Create Contracts</li>
-    <li>Upload Signed Agreements</li>
-    <li>Create Service Requests</li>
-</ul>
+    <!-- NAVIGATION CARDS -->
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Clients</h4>
+                    <p class="card-text">Manage system clients via API</p>
+                    <a href="/Clients" class="btn btn-primary">Open</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Contracts</h4>
+                    <p class="card-text">Approve and manage contracts</p>
+                    <a href="/Contracts" class="btn btn-success">Open</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Service Requests</h4>
+                    <p class="card-text">Create and track service requests</p>
+                    <a href="/ServiceRequests" class="btn btn-warning">Open</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- LIVE SYSTEM INFO -->
+    <div class="mt-4 p-4 bg-light rounded shadow-sm">
+        <h5>System Overview</h5>
+        <ul>
+            <li>Frontend: ASP.NET Core MVC</li>
+            <li>Backend: Web API (Swagger Enabled)</li>
+            <li>Architecture: Repository + Service Pattern</li>
+            <li>Database: SQL Server via Entity Framework Core</li>
+        </ul>
+    </div>
+
+</div>

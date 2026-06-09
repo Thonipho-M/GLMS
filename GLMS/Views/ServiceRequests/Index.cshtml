@@ -1,47 +1,27 @@
-﻿@model List<ServiceRequest>
+﻿@model List<GLMS.Models.ViewModels.ServiceRequestViewModel>
 
 <h2>Service Requests</h2>
 
-<table border="1">
+<a class="btn btn-primary" href="/ServiceRequests/Create?contractId=1">
+    Create Request
+</a>
 
-    <tr>
-        <th>Client</th>
-        <th>Contract</th>
-        <th>Description</th>
-        <th>USD Amount</th>
-        <th>ZAR Amount</th>
-        <th>Status</th>
-    </tr>
-
-    @foreach (var r in Model)
-    {
+<table class="table table-bordered">
+    <thead>
         <tr>
-
-            <td>
-                @r.Contract?.Client?.Name
-            </td>
-
-            <td>
-                #@r.ContractId
-            </td>
-
-            <td>
-                @r.Description
-            </td>
-
-            <td>
-                $ @r.CostUSD
-            </td>
-
-            <td>
-                R @r.CostZAR
-            </td>
-
-            <td>
-                @r.Status
-            </td>
-
+            <th>Contract ID</th>
+            <th>Description</th>
+            <th>Amount</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ContractId</td>
+                <td>@item.Description</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+    </tbody>
 </table>

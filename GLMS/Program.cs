@@ -1,5 +1,6 @@
 
 using GLMS.Services;
+using GLMS.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,10 @@ builder.Services.AddScoped<ClientApiService>();
 builder.Services.AddHttpClient("GLMSAPI", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7078/"); 
+});
+builder.Services.AddHttpClient<ApiService>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7078/");
 });
 
 var app = builder.Build();

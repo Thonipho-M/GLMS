@@ -1,74 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using GLMS.Models.ViewModels;
+using GLMS.Web.Services;
+using Microsoft.AspNetCore.Mvc;
 
-public class ServiceRequestsController : Controller
+namespace GLMS.Web.Controllers
 {
-    private readonly AppDbContext _context;
-    private readonly ServiceRequestService _service;
-    private readonly CurrencyService _currencyService;
-
-    public ServiceRequestsController(
-        AppDbContext context,
-        ServiceRequestService service,
-        CurrencyService currencyService)
+    public class ServiceRequestsController : Controller
     {
-        _context = context;
-        _service = service;
-        _currencyService = currencyService;
-    }
+        private readonly ApiService _api;
 
-    // GET: Create
-    public async Task<IActionResult> Create()
-    {
-        ViewBag.Contracts = _context.Contracts
-    .Include(c => c.Client)
-    .ToList();
-        ViewBag.Rate = await _currencyService.GetUsdToZarRateAsync();
-
-        return View();
-    }
-
-    // POST: Create
-    [HttpPost]
-    public async Task<IActionResult> Create(ServiceRequest request, decimal usdAmount)
-    {
-        var contract = _context.Contracts.Find(request.ContractId);
-
-        if (!_service.CanCreateServiceRequest(contract.Status))
+        public ServiceRequestsController(ApiService api)
         {
-            ModelState.AddModelError("", "Cannot create request for expired/on hold contract");
-
-            ViewBag.Contracts = _context.Contracts
-                .Include(c => c.Client)
-                .ToList();
-
-            return View(request);
+            _api = api;
         }
 
-        var rate = await _currencyService.GetUsdToZarRateAsync();
+        public async Task<IActionResult> Index()
+        {
+            var data = await _api.GetServiceRequests();
+            return View(data);
+        }
 
-        request.CostUSD = usdAmount;
+        public IActionResult Create(int contractId)
+        {
+            return View(new CreateServiceRequestViewModel
+            {
+                ContractId = contractId
+            });
+        }
 
-        request.CostZAR =
-            _currencyService.ConvertUsdToZar(usdAmount, rate);
-
-        // DEFAULT STATUS
-        request.Status = "Pending";
-
-        _context.ServiceRequests.Add(request);
-
-        _context.SaveChanges();
-
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Index()
-    {
-        var requests = _context.ServiceRequests
-    .Include(r => r.Contract)
-    .ThenInclude(c => c.Client)
-    .ToList();
-
-        return View(requests);
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateServiceRequestViewModel model)
+        {
+            await _api.CreateServiceRequest(model);
+            return RedirectToAction("Index");
+        }
     }
 }
