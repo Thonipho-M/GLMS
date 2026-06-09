@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GLMS.Models.ViewModels;
 using GLMS.Shared.Requests;
-using GLMS.Shared.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 public class ClientsController : Controller
 {
@@ -11,22 +11,43 @@ public class ClientsController : Controller
         _service = service;
     }
 
+    // GET: Clients
     public async Task<IActionResult> Index()
     {
-        var clients = await _service.GetClients();
-        return View(clients);
+        var clientsDto = await _service.GetClients();
+
+        var viewModel = clientsDto.Select(c => new ClientViewModel
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Email = c.Email
+        }).ToList();
+
+        return View(viewModel);
     }
 
-    [HttpGet]
+    // GET: Create
     public IActionResult Create()
     {
-        return View();
+        return View(new ClientViewModel());
     }
 
+    // POST: Create
     [HttpPost]
-    public async Task<IActionResult> Create(CreateClientRequest request)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ClientViewModel model)
     {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var request = new CreateClientRequest
+        {
+            Name = model.Name,
+            Email = model.Email
+        };
+
         await _service.CreateClient(request);
+
         return RedirectToAction("Index");
     }
 }

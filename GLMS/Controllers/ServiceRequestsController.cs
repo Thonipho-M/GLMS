@@ -19,11 +19,13 @@ namespace GLMS.Web.Controllers
             return View(data);
         }
 
-        public IActionResult Create(int contractId)
+        public async Task<IActionResult> Create()
         {
+            var contracts = await _api.GetContracts();
+
             return View(new CreateServiceRequestViewModel
             {
-                ContractId = contractId
+                Contracts = contracts
             });
         }
 

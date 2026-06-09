@@ -3,7 +3,18 @@
 <h2>Create Service Request</h2>
 
 <form method="post">
-    <input type="hidden" asp-for="ContractId" />
+
+    <div class="mb-3">
+        <label>Contract</label>
+        <select asp-for="ContractId" class="form-control">
+            @foreach (var c in Model.Contracts)
+            {
+                <option value="@c.Id">
+                    @c.ClientName (Contract @c.Id)
+                </option>
+            }
+        </select>
+    </div>
 
     <div class="mb-3">
         <label>Description</label>
@@ -15,7 +26,6 @@
         <input asp-for="Amount" class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-success">
-        Submit
-    </button>
+    <button class="btn btn-success">Submit</button>
+
 </form>

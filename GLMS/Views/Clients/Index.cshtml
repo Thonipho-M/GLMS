@@ -1,22 +1,28 @@
-﻿@using GLMS.Shared.DTOs
-@model List<ClientDto>
+﻿@model List<GLMS.Models.ViewModels.ClientViewModel>
 
 <h2>Clients</h2>
 
-<a asp-action="Create">Add New Client</a>
+<a class="btn btn-primary mb-3" href="/Clients/Create">
+    + Create Client
+</a>
 
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Contact</th>
-        <th>Region</th>
-    </tr>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Client Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
 
-@foreach (var c in Model)
-{
-    <tr>
-        <td>@c.Name</td>
-
-    </tr>
-}
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.Id</td>
+                <td>@client.Name</td>
+                <td>@client.Email</td>
+            </tr>
+        }
+    </tbody>
 </table>

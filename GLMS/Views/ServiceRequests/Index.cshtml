@@ -2,22 +2,21 @@
 
 <h2>Service Requests</h2>
 
-<a class="btn btn-primary" href="/ServiceRequests/Create?contractId=1">
-    Create Request
-</a>
-
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Contract ID</th>
+            <th>Client</th>
+            <th>Contract</th>
             <th>Description</th>
             <th>Amount</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.ClientName</td>
                 <td>@item.ContractId</td>
                 <td>@item.Description</td>
                 <td>@item.Amount</td>
